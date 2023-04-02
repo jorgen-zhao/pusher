@@ -21,19 +21,18 @@ public class SendServiceImpl implements SendService {
     public BaseResult send(SendRequest request) {
 
         // CHAIN ENTRY
-        SendTaskModel sendTaskModel = SendTaskModel.builder()
-                .sourceCode(request.getSourceCode())
-                .target(request.getTarget())
-                .templateCode(request.getTemplateCode())
-                .data(request.getData())
-                .build();
+        SendTaskModel sendTaskModel = new SendTaskModel();
+        sendTaskModel.setSourceCode(request.getSourceCode());
+        sendTaskModel.setData(request.getData());
+        sendTaskModel.setTarget(request.getTarget());
+        sendTaskModel.setTemplateCode(request.getTemplateCode());
 
-        ProcessContext context = ProcessContext.builder()
-                .code("call")
-                .model(sendTaskModel)
-                .needBreak(false)
-                .result(BaseResult.success())
-                .build();
+
+        ProcessContext context = new ProcessContext();
+        context.setCode("call");
+        context.setModel(sendTaskModel);
+        context.setNeedBreak(false);
+        context.setResult(BaseResult.success());
 
         ProcessContext process = processController.process(context);
         return new BaseResult(process.getResult().getCode(), process.getResult().getMsg());

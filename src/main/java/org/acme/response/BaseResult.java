@@ -2,7 +2,6 @@ package org.acme.response;
 
 import lombok.Data;
 
-@Data
 public class BaseResult<T> {
 
     private int code;
@@ -26,5 +25,29 @@ public class BaseResult<T> {
 
     public static BaseResult<String> fail() {
         return new BaseResult<>(500);
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
     }
 }

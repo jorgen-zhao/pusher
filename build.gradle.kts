@@ -23,6 +23,7 @@ dependencies {
     implementation("cn.hutool:hutool-all:5.7.13")
     implementation("com.alibaba:fastjson:1.2.80")
     implementation("org.springframework:spring-context:5.3.15")
+    implementation("io.quarkus:quarkus-resteasy-reactive-jackson")
 }
 
 group = "org.acme"

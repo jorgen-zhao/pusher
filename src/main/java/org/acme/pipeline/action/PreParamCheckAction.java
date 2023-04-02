@@ -18,7 +18,8 @@ public class PreParamCheckAction implements BusinessProcess<SendTaskModel> {
         SendTaskModel model = context.getModel();
         String templateCode = model.getTemplateCode();
         if (StrUtil.isBlank(templateCode)) {
-            context.setNeedBreak(true).setResult(BaseResult.fail());
+            context.setNeedBreak(true) ;
+            context.setResult(BaseResult.fail());
             return;
         }
     }

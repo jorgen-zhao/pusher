@@ -1,8 +1,8 @@
 package org.acme.pipeline.action;
 
-import cn.hutool.core.util.ReferenceUtil;
 import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.acme.pipeline.BusinessProcess;
@@ -10,7 +10,8 @@ import org.acme.pipeline.context.ContentModel;
 import org.acme.pipeline.context.ProcessContext;
 import org.acme.pipeline.context.SendTaskModel;
 import org.acme.pipeline.context.TaskInfo;
-import org.acme.pipeline.context.content.WXTemplate;
+import org.acme.pipeline.context.content.SMSContentModel;
+import org.acme.utils.ContentHolderUtil;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.lang.reflect.Field;
@@ -34,27 +35,39 @@ public class AssembleAction implements BusinessProcess<SendTaskModel> {
     }
 
     private List<TaskInfo> assembleTaskInfo(String templateCode, Map<String, String> data) {
+        ArrayList<TaskInfo> taskInfos = new ArrayList<>();
 
-        return new ArrayList<>();
+
+        TaskInfo info = new TaskInfo();
+        info.setContentModel(getContentModelValue(templateCode, data));
+        info.setTarget("");
+        info.setTemplateCode(templateCode);
+        info.setSendChanel("");
+        info.setSourceCode("");
+        taskInfos.add(info);
+
+        return taskInfos;
     }
 
     private static ContentModel getContentModelValue(String templateCode, Map<String, String> data) {
 
         // msgContent
         // {\"path\":\"\",\"miniProgramId\":\"\",\"templateId\":\"ylGskR8FSaKF3YmPmoQlSf8QXPOTI4t2SwugjoBBR_0\",\"url\":\"{$url}\",\"linkType\":\"10\",\"officialAccountParam\":\"{\\\"first\\\":\\\"a\\\",\\\"keyword1\\\":\\\"a\\\",\\\"keyword2\\\":\\\"a\\\",\\\"remark\\\":\\\"a\\\"}\"}
-        String msgContent = "";
+        String msgContent = "{\"url\":\"\",\"content\":\"您好，请凭取件码：{$code}，至{$address}取件，若有问题请咨询{$phone}\"}";
         JSONObject jsonObject = JSON.parseObject(msgContent);
         //
-        Field[] fields = ReflectUtil.getFields(WXTemplate.class);
-        ReflectUtil.newInstance(WXTemplate.class);
+        Field[] fields = ReflectUtil.getFields(SMSContentModel.class);
+        ContentModel contentModel = ReflectUtil.newInstance(SMSContentModel.class);
 
         for (Field field : fields) {
             String originValue = jsonObject.getString(field.getName());
 
             if (StrUtil.isNotBlank(originValue)) {
-
+                String resultValue = ContentHolderUtil.replacePlaceHolder(originValue, data);
+                Object resultObj = JSONUtil.isJsonObj(resultValue) ? JSONUtil.toBean(resultValue, field.getType()) : resultValue;
+                ReflectUtil.setFieldValue(contentModel, field, resultObj);
             }
         }
-        return null;
+        return contentModel;
     }
 }

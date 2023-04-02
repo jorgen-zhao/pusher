@@ -1,6 +1,7 @@
 package org.acme.utils;
 
 import io.quarkus.runtime.annotations.RegisterForReflection;
+import io.quarkus.runtime.configuration.ConfigUtils;
 import org.jboss.logging.Logger;
 import org.springframework.util.PropertyPlaceholderHelper;
 import java.text.MessageFormat;

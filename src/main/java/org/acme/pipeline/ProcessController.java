@@ -19,6 +19,13 @@ public class ProcessController {
      */
     private Map<String, ProcessTemplate> templateConfig = null;
 
+    public Map<String, ProcessTemplate> getTemplateConfig() {
+        return templateConfig;
+    }
+
+    public void setTemplateConfig(Map<String, ProcessTemplate> templateConfig) {
+        this.templateConfig = templateConfig;
+    }
 
     /**
      * 执行责任链
@@ -48,6 +55,7 @@ public class ProcessController {
             }
         }
         return context;
+
     }
 
 
