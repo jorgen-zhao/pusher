@@ -2,7 +2,6 @@ package org.acme.handler;
 
 import io.quarkus.runtime.StartupEvent;
 
-import javax.annotation.PostConstruct;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
@@ -18,9 +17,4 @@ public abstract class AbstractHandler implements Handler {
         System.out.println(getCode() + " init.....");
         handlerHolder.register(getCode(), this);
     }
-
-//    @PostConstruct
-//    public void init() {
-//        handlerHolder.register(getCode(), this);
-//    }
 }

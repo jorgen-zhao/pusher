@@ -12,8 +12,10 @@ import org.acme.pipeline.context.SendTaskModel;
 import org.acme.pipeline.context.TaskInfo;
 import org.acme.pipeline.context.content.SMSContentModel;
 import org.acme.utils.ContentHolderUtil;
+import org.acme.utils.PlaceholderResolver;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +23,9 @@ import java.util.Map;
 
 @ApplicationScoped
 public class AssembleAction implements BusinessProcess<SendTaskModel> {
+
+    @Inject
+    PlaceholderResolver placeholderResolver;
 
     @Override
     public void process(ProcessContext<SendTaskModel> context) {
@@ -49,7 +54,7 @@ public class AssembleAction implements BusinessProcess<SendTaskModel> {
         return taskInfos;
     }
 
-    private static ContentModel getContentModelValue(String templateCode, Map<String, String> data) {
+    private ContentModel getContentModelValue(String templateCode, Map<String, String> data) {
 
         // msgContent
         // {\"path\":\"\",\"miniProgramId\":\"\",\"templateId\":\"ylGskR8FSaKF3YmPmoQlSf8QXPOTI4t2SwugjoBBR_0\",\"url\":\"{$url}\",\"linkType\":\"10\",\"officialAccountParam\":\"{\\\"first\\\":\\\"a\\\",\\\"keyword1\\\":\\\"a\\\",\\\"keyword2\\\":\\\"a\\\",\\\"remark\\\":\\\"a\\\"}\"}
@@ -63,7 +68,8 @@ public class AssembleAction implements BusinessProcess<SendTaskModel> {
             String originValue = jsonObject.getString(field.getName());
 
             if (StrUtil.isNotBlank(originValue)) {
-                String resultValue = ContentHolderUtil.replacePlaceHolder(originValue, data);
+//                String resultValue = ContentHolderUtil.replacePlaceHolder(originValue, data);
+                String resultValue = placeholderResolver.resolveByStrMap(originValue, data);
                 Object resultObj = JSONUtil.isJsonObj(resultValue) ? JSONUtil.toBean(resultValue, field.getType()) : resultValue;
                 ReflectUtil.setFieldValue(contentModel, field, resultObj);
             }
