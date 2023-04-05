@@ -4,9 +4,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
 
-@Data
+//@Data
 //@Builder
-@ToString
+//@ToString
 public class TaskInfo {
 
     private String templateCode;
@@ -57,5 +57,16 @@ public class TaskInfo {
 
     public void setContentModel(ContentModel contentModel) {
         this.contentModel = contentModel;
+    }
+
+    @Override
+    public String toString() {
+        return "TaskInfo{" +
+                "templateCode='" + templateCode + '\'' +
+                ", sourceCode='" + sourceCode + '\'' +
+                ", target='" + target + '\'' +
+                ", sendChanel='" + sendChanel + '\'' +
+                ", contentModel=" + contentModel +
+                '}';
     }
 }

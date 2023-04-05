@@ -28,6 +28,7 @@ dependencies {
     implementation("io.quarkus:quarkus-jdbc-postgresql")
     implementation("org.postgresql:postgresql")
     implementation("io.quarkus:quarkus-hibernate-orm-panache")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.13.0")
 //    implementation("javax.transaction:javax.transaction-api:1.3.3")
 }
 
