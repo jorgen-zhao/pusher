@@ -24,6 +24,11 @@ dependencies {
     implementation("com.alibaba:fastjson:1.2.80")
     implementation("org.springframework:spring-context:5.3.15")
     implementation("io.quarkus:quarkus-resteasy-reactive-jackson")
+    implementation("io.quarkus:quarkus-hibernate-orm")
+    implementation("io.quarkus:quarkus-jdbc-postgresql")
+    implementation("org.postgresql:postgresql")
+    implementation("io.quarkus:quarkus-hibernate-orm-panache")
+//    implementation("javax.transaction:javax.transaction-api:1.3.3")
 }
 
 group = "org.acme"

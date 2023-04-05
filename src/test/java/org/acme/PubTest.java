@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import io.quarkus.test.junit.QuarkusTest;
 import org.acme.request.SendRequest;
 import org.acme.response.BaseResult;
-import org.acme.service.SendService;
+import org.acme.business.SendService;
 import org.junit.jupiter.api.Test;
 
 import javax.inject.Inject;

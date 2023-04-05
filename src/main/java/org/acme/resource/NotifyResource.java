@@ -3,15 +3,11 @@ package org.acme.resource;
 import com.alibaba.fastjson.JSON;
 import org.acme.request.SendRequest;
 import org.acme.response.BaseResult;
-import org.acme.service.SendService;
+import org.acme.business.SendService;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import java.util.HashMap;
 import java.util.Map;
 
 @Path("notify")

@@ -1,11 +1,11 @@
-package org.acme.service.impl;
+package org.acme.business.impl;
 
 import org.acme.pipeline.ProcessController;
 import org.acme.pipeline.context.ProcessContext;
 import org.acme.pipeline.context.SendTaskModel;
 import org.acme.request.SendRequest;
 import org.acme.response.BaseResult;
-import org.acme.service.SendService;
+import org.acme.business.SendService;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
