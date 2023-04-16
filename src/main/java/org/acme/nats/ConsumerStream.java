@@ -19,8 +19,8 @@ import java.nio.charset.StandardCharsets;
 @ApplicationScoped
 public class ConsumerStream {
 
-    @Inject
-    Connection connection;
+    //    @Inject
+//    NatsConnection connection;
 
     public void init(@Observes StartupEvent event) {
 //        this.subscribeToStream();
@@ -32,11 +32,12 @@ public class ConsumerStream {
 
     public void subscribeToStream() {
         try {
+            Connection connection = Nats.connect();
             JetStream jetStream = connection.jetStream();
             MessageHandler messageHandler = createMessageHandler();
             PushSubscribeOptions subscribeOptions = createSubscribeOptions();
             jetStream.subscribe(STREAM_TOPIC, connection.createDispatcher(), messageHandler, false, subscribeOptions);
-        } catch (IOException | JetStreamApiException e) {
+        } catch (IOException | JetStreamApiException | InterruptedException e) {
             Log.errorv("Error subscribing to stream: {}", e.getMessage());
         }
     }
@@ -58,7 +59,8 @@ public class ConsumerStream {
 
     private TaskEvent deserializeTaskEvent(byte[] data) throws JsonProcessingException {
         String jsonString = new String(data, StandardCharsets.UTF_8);
-        return new ObjectMapper().readValue(jsonString, new TypeReference<>() {});
+        return new ObjectMapper().readValue(jsonString, new TypeReference<>() {
+        });
     }
 
     private void handleTaskEvent(TaskEvent taskEvent) {

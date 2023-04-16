@@ -30,6 +30,8 @@ dependencies {
     implementation("io.quarkus:quarkus-hibernate-orm-panache")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.13.0")
     implementation("io.nats:jnats:2.16.10")
+    implementation("org.mapstruct:mapstruct:1.5.2.Final")
+    annotationProcessor("org.mapstruct:mapstruct-processor:1.5.2.Final")
 //    implementation("javax.transaction:javax.transaction-api:1.3.3")
 }
 
